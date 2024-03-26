@@ -8,6 +8,7 @@ import 'package:my_flutter_app/Movie.dart';
 import 'package:my_flutter_app/MovieDetail.dart';
 import 'package:dio/dio.dart';
 import 'package:my_flutter_app/main.dart';
+import 'package:provider/provider.dart';
 
 class MovieList extends StatelessWidget {
   /// Method to get movies from the backend
@@ -176,12 +177,7 @@ class MovieList extends StatelessWidget {
                 ),
               ),
               actions: [
-                // IconButton(
-                //   onPressed: () {},
-                //   style:
-                //       enabledFilledButtonStyle(false, Theme.of(context).colorScheme),
-                //   icon: const Icon(Icons.sort_rounded),
-                // ),
+                const ButtonChangeDarkMode(),
                 PopupMenuButton<AppMenu>(
                   itemBuilder: (BuildContext context) =>
                       <PopupMenuEntry<AppMenu>>[
@@ -277,22 +273,53 @@ class MovieList extends StatelessWidget {
       },
     );
   }
+}
 
-  ButtonStyle enabledFilledButtonStyle(bool selected, ColorScheme colors) {
-    return IconButton.styleFrom(
-      foregroundColor: selected ? colors.onPrimary : colors.primary,
-      backgroundColor: selected ? colors.primary : colors.surfaceVariant,
-      disabledForegroundColor: colors.onSurface.withOpacity(0.38),
-      disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
-      hoverColor: selected
-          ? colors.onPrimary.withOpacity(0.08)
-          : colors.primary.withOpacity(0.08),
-      focusColor: selected
-          ? colors.onPrimary.withOpacity(0.12)
-          : colors.primary.withOpacity(0.12),
-      highlightColor: selected
-          ? colors.onPrimary.withOpacity(0.12)
-          : colors.primary.withOpacity(0.12),
+class ButtonChangeDarkMode extends StatefulWidget {
+  const ButtonChangeDarkMode({super.key});
+
+  @override
+  _ButtonChangeDarkMode createState() => _ButtonChangeDarkMode();
+}
+
+class _ButtonChangeDarkMode extends State<ButtonChangeDarkMode> {
+  bool _isDarkMode = false;
+
+  @override
+  Widget build(BuildContext context) {
+    ButtonStyle enabledFilledButtonStyle(bool selected, ColorScheme colors) {
+      return IconButton.styleFrom(
+        foregroundColor: selected ? colors.onPrimary : colors.primary,
+        // backgroundColor: selected ? colors.primary : colors.surfaceVariant,
+        disabledForegroundColor: colors.onSurface.withOpacity(0.38),
+        disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
+        hoverColor: selected
+            ? colors.onPrimary.withOpacity(0.08)
+            : colors.primary.withOpacity(0.08),
+        focusColor: selected
+            ? colors.onPrimary.withOpacity(0.12)
+            : colors.primary.withOpacity(0.12),
+        highlightColor: selected
+            ? colors.onPrimary.withOpacity(0.12)
+            : colors.primary.withOpacity(0.12),
+      );
+    }
+
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _isDarkMode = !_isDarkMode;
+          print('Dark mode: $_isDarkMode');
+
+          _isDarkMode // call the functions
+              ? themeProvider.setDarkmode()
+              : themeProvider.setLightMode();
+        });
+      },
+      style: enabledFilledButtonStyle(false, Theme.of(context).colorScheme),
+      icon: Icon(_isDarkMode ? Icons.dark_mode : Icons.light_mode),
     );
   }
 }

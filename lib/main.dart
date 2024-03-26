@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/MovieList.dart';
+import 'package:provider/provider.dart';
 
 enum AppMenu {
   about,
@@ -7,7 +8,19 @@ enum AppMenu {
   settings,
 }
 
-void main() => runApp(const MovieApp());
+void main() async {
+  runApp(
+    MultiProvider(
+      // create the provider
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        )
+      ],
+      child: const MovieApp(),
+    ),
+  );
+}
 
 class MovieApp extends StatelessWidget {
   const MovieApp({super.key});
@@ -16,18 +29,34 @@ class MovieApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.light,
-        colorSchemeSeed: Colors.green[700],
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        colorSchemeSeed: Colors.green[700],
-      ),
+      theme: Provider.of<ThemeProvider>(context).currentTheme,
       home: MovieList(),
     );
+  }
+}
+
+class ThemeProvider extends ChangeNotifier {
+  ThemeData? currentTheme = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.light,
+    colorSchemeSeed: Colors.green[700],
+  );
+
+  setLightMode() {
+    currentTheme = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light, // LightMode
+      colorSchemeSeed: Colors.green[700],
+    );
+    notifyListeners();
+  }
+
+  setDarkmode() {
+    currentTheme = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark, // DarkMode
+      colorSchemeSeed: Colors.green[700],
+    );
+    notifyListeners();
   }
 }

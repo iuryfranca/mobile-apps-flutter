@@ -129,8 +129,6 @@ class FloatingActionButtonFavorite extends StatefulWidget {
   const FloatingActionButtonFavorite({super.key});
 
   @override
-
-  // ignore: library_private_types_in_public_api
   _FloatingActionButtonFavorite createState() =>
       _FloatingActionButtonFavorite();
 }
