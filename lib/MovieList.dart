@@ -11,26 +11,7 @@ import 'package:my_flutter_app/main.dart';
 import 'package:provider/provider.dart';
 
 class MovieList extends StatelessWidget {
-  /// Method to get movies from the backend
-  // Future<List<Movie>> getMovies() async {
-  //   const String url =
-  //       'https://api.themoviedb.org/3/movie/popular?api_key=2b714e82ab5108ff8b963154afd167ea&language=pt-BR';
-  //   var httpClient = HttpClient();
-  //   try {
-  //     // Make the call
-  //     var request = await httpClient.getUrl(Uri.parse(url));
-  //     var response = await request.close();
-  //     if (response.statusCode == HttpStatus.ok) {
-  //       var json = await response.transform(utf8.decoder).join();
-  //       return createMovieList(json);
-  //     } else {
-  //       print("Failed http call.");
-  //     }
-  //   } catch (exception) {
-  //     print(exception.toString());
-  //   }
-  //   return [];
-  // }
+  const MovieList({super.key});
 
   Future<List<Movie>> getMoviesWithDio() async {
     const String url =
@@ -150,7 +131,7 @@ class MovieList extends StatelessWidget {
           // Shows the real data with the data retrieved.
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Listagem de Filmes'),
+              title: const Text('Listagem de Filme'),
               scrolledUnderElevation: 4.0,
               shadowColor: Theme.of(context).shadowColor,
               leading: const Center(

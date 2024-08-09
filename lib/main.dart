@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/MovieList.dart';
+import 'package:my_flutter_app/login.dart';
 import 'package:provider/provider.dart';
 
 enum AppMenu {
@@ -17,20 +17,20 @@ void main() async {
           create: (_) => ThemeProvider(),
         )
       ],
-      child: const MovieApp(),
+      child: const TravelersApp(),
     ),
   );
 }
 
-class MovieApp extends StatelessWidget {
-  const MovieApp({super.key});
+class TravelersApp extends StatelessWidget {
+  const TravelersApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).currentTheme,
-      home: MovieList(),
+      home: const Login(),
     );
   }
 }
@@ -39,14 +39,14 @@ class ThemeProvider extends ChangeNotifier {
   ThemeData? currentTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    colorSchemeSeed: Colors.green[700],
+    colorSchemeSeed: Colors.white,
   );
 
   setLightMode() {
     currentTheme = ThemeData(
       useMaterial3: true,
       brightness: Brightness.light, // LightMode
-      colorSchemeSeed: Colors.green[700],
+      colorSchemeSeed: Colors.white,
     );
     notifyListeners();
   }
@@ -55,7 +55,7 @@ class ThemeProvider extends ChangeNotifier {
     currentTheme = ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark, // DarkMode
-      colorSchemeSeed: Colors.green[700],
+      colorSchemeSeed: Colors.white,
     );
     notifyListeners();
   }
