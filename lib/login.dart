@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/MovieList.dart';
 import 'package:travel_app/banners/banner1.dart';
 import 'package:travel_app/main.dart';
 
@@ -360,7 +359,6 @@ class _ButtonChangeDarkMode extends State<ButtonChangeDarkMode> {
       onPressed: () {
         setState(() {
           _isDarkMode = !_isDarkMode;
-          print('Dark mode: $_isDarkMode');
 
           _isDarkMode // call the functions
               ? themeProvider.setDarkmode()

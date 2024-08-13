@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:travel_app/home.dart';
 
@@ -21,7 +19,7 @@ class Banner3 extends StatelessWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  SizedBox(
                       height: 480,
                       child: Stack(alignment: Alignment.topCenter, children: [
                         Positioned(
@@ -80,7 +78,7 @@ class TitleSection extends StatelessWidget {
           /*2*/
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: Container(
+            child: SizedBox(
                 height: 120,
                 child: Stack(alignment: Alignment.topCenter, children: [
                   RichText(

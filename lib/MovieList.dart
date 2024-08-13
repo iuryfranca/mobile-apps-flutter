@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:travel_app/Movie.dart';
 import 'package:travel_app/MovieDetail.dart';
 import 'package:dio/dio.dart';
@@ -24,10 +24,14 @@ class MovieList extends StatelessWidget {
       if (request.statusCode == HttpStatus.ok) {
         return createMovieList(request.toString());
       } else {
-        print("Failed http call.");
+        if (kDebugMode) {
+          print("Failed http call.");
+        }
       }
     } catch (exception) {
-      print(exception.toString());
+      if (kDebugMode) {
+        print(exception.toString());
+      }
     }
     return [];
   }
@@ -292,7 +296,6 @@ class _ButtonChangeDarkMode extends State<ButtonChangeDarkMode> {
       onPressed: () {
         setState(() {
           _isDarkMode = !_isDarkMode;
-          print('Dark mode: $_isDarkMode');
 
           _isDarkMode // call the functions
               ? themeProvider.setDarkmode()

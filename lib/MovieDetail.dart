@@ -118,7 +118,7 @@ class MovieDetail extends StatelessWidget {
               label: const Text('Avaliar filme'),
               icon: const Icon(Icons.rate_review_outlined),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             const FloatingActionButtonFavorite(),
           ],
         ));
