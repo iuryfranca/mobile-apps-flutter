@@ -10,8 +10,8 @@ final _passwordFieldKeyPassword = GlobalKey<FormFieldState<String>>();
 final emailInputController = TextEditingController();
 final passwordInputController = TextEditingController();
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,7 @@ class Login extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(children: [
             const TitleSection(
-                title: 'Faça seu login ',
-                description: 'Faça login para continuar nosso aplicativo'),
+                title: 'HOME', description: 'FAZER O RESTO AQYUUI'),
             LoginFormField(
               fieldKeyEmail: _passwordFieldKeyEmail,
               fieldKeyPassword: _passwordFieldKeyPassword,

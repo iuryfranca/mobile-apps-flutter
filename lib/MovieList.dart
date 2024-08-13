@@ -4,10 +4,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:my_flutter_app/Movie.dart';
-import 'package:my_flutter_app/MovieDetail.dart';
+import 'package:travel_app/Movie.dart';
+import 'package:travel_app/MovieDetail.dart';
 import 'package:dio/dio.dart';
-import 'package:my_flutter_app/main.dart';
+import 'package:travel_app/main.dart';
 import 'package:provider/provider.dart';
 
 class MovieList extends StatelessWidget {

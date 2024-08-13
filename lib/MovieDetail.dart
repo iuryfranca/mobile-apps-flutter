@@ -1,6 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/Movie.dart';
+import 'package:travel_app/Movie.dart';
 
 // ignore: must_be_immutable
 class MovieDetail extends StatelessWidget {
