@@ -39,14 +39,14 @@ class ThemeProvider extends ChangeNotifier {
   ThemeData? currentTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    colorSchemeSeed: Colors.white,
+    colorSchemeSeed: Colors.lightBlueAccent,
   );
 
   setLightMode() {
     currentTheme = ThemeData(
       useMaterial3: true,
       brightness: Brightness.light, // LightMode
-      colorSchemeSeed: Colors.white,
+      colorSchemeSeed: Colors.lightBlueAccent,
     );
     notifyListeners();
   }
@@ -55,7 +55,7 @@ class ThemeProvider extends ChangeNotifier {
     currentTheme = ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark, // DarkMode
-      colorSchemeSeed: Colors.white,
+      colorSchemeSeed: Colors.lightBlueAccent,
     );
     notifyListeners();
   }
