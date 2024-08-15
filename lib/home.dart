@@ -1,15 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app/banners/banner1.dart';
 import 'package:travel_app/main.dart';
-
-final _passwordFieldKeyEmail = GlobalKey<FormFieldState<String>>();
-final _passwordFieldKeyPassword = GlobalKey<FormFieldState<String>>();
-
-final emailInputController = TextEditingController();
-final passwordInputController = TextEditingController();
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -19,214 +13,217 @@ class Home extends StatelessWidget {
     ColorScheme colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-        appBar: AppBar(
-          actions: const [
-            ButtonChangeDarkMode(),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            const TitleSection(
-                title: 'HOME', description: 'FAZER O RESTO AQYUUI'),
-            LoginFormField(
-              fieldKeyEmail: _passwordFieldKeyEmail,
-              fieldKeyPassword: _passwordFieldKeyPassword,
-              onFieldSubmittedEmail: (value) {
-                emailInputController.text = value;
-              },
-              onFieldSubmittedPassword: (value) {
-                passwordInputController.text = value;
-              },
-            ),
-            const ButtonLogin(),
-            Padding(
-                padding: const EdgeInsets.only(top: 0, bottom: 16, right: 32),
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Não tem uma conta?  ',
-                        style: TextStyle(
-                          color: colors.onSurface,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        'Inscreva-se',
-                        style: TextStyle(
-                          color: colors.primary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
+        // appBar: AppBar(
+        //   actions: const [
+        //     ButtonChangeDarkMode(),
+        //   ],
+        // ),
+        body: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const HeaderSection(),
+                          const TitleSection(
+                              title: 'Explore o',
+                              description: 'o Belo mundo ',
+                              titleHighlighted: ' world!'),
+                          Container(
+                              padding: const EdgeInsets.only(
+                                  top: 16, bottom: 16, left: 32, right: 32),
+                              alignment: Alignment.centerLeft,
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Melhor Destinos',
+                                      style: TextStyle(
+                                        color: colors.onSurfaceVariant,
+                                        fontSize: 18,
+                                        fontFamily: 'GillSansMT',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text('Ver Tudo',
+                                        style: TextStyle(
+                                          color: colors.primary,
+                                          fontSize: 18,
+                                          fontFamily: 'GillSansMT',
+                                          fontWeight: FontWeight.w400,
+                                        )),
+                                  ])),
+                          Container(
+                              padding: const EdgeInsets.only(
+                                  top: 0, bottom: 16, left: 32, right: 32),
+                              alignment: Alignment.centerLeft,
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: const BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 241, 246, 248),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 6,
+                                            blurStyle: BlurStyle.normal,
+                                            color: Color.fromARGB(28, 0, 0, 0),
+                                            offset: Offset.zero,
+                                            spreadRadius: 0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Image.asset(
+                                          'assets/images/card-viagem1.png'),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: const BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 241, 246, 248),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20)),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 6,
+                                            blurStyle: BlurStyle.normal,
+                                            color: Color.fromARGB(28, 0, 0, 0),
+                                            offset: Offset.zero,
+                                            spreadRadius: 0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Image.asset(
+                                          'assets/images/card-viagem2.png'),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        ]),
                   ),
-                )),
-            Padding(
-                padding: const EdgeInsets.all(32),
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width,
-                        child: Text(
-                          'Ou conecte',
-                          style: TextStyle(
-                            color: colors.onSurface,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.only(top: 10),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
+                        ),
+                        color: Color.fromARGB(255, 241, 246, 248),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6,
+                            blurStyle: BlurStyle.normal,
+                            color: Color.fromARGB(28, 0, 0, 0),
+                            offset: Offset.zero,
+                            spreadRadius: 0,
                           ),
-                        ),
+                        ],
                       ),
-                      Container(
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width,
-                          height: 130,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                            top: 10, bottom: 10, left: 24, right: 32),
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: Image.asset(
-                                      'assets/logo/logo-facebook.png')),
-                              Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: Image.asset(
-                                      'assets/logo/logo-instagram.png')),
-                              Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: Image.asset(
-                                      'assets/logo/logo-twitter.png')),
-                            ],
-                          ))
-                    ],
-                  ),
-                ))
-          ]),
-        ));
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/svgs/Caht.svg'),
+                                  Text('Mensagens')
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/svgs/Home.svg'),
+                                  Text('Home')
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/svgs/Person.svg'),
+                                  Text('Perfil')
+                                ],
+                              ),
+                            ]),
+                      )),
+                ])));
   }
 }
 
-class LoginFormField extends StatefulWidget {
-  const LoginFormField({
-    super.key,
-    required this.fieldKeyEmail,
-    required this.fieldKeyPassword,
-    required this.onFieldSubmittedEmail,
-    required this.onFieldSubmittedPassword,
-  });
-
-  final Key fieldKeyEmail;
-  final Key fieldKeyPassword;
-
-  final ValueChanged<String> onFieldSubmittedEmail;
-  final ValueChanged<String> onFieldSubmittedPassword;
-
-  @override
-  _PasswordFieldState createState() => _PasswordFieldState();
-}
-
-class _PasswordFieldState extends State<LoginFormField> {
-  bool _obscured = true;
-
-  void _toggleObscured() {
-    setState(() {
-      _obscured = !_obscured;
-    });
-  }
+class HeaderSection extends StatelessWidget {
+  const HeaderSection({super.key});
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
 
-    return Column(
-      children: [
-        Padding(
-            padding:
-                const EdgeInsets.only(top: 16, bottom: 8, left: 32, right: 32),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(88, 206, 206, 206),
-              ),
-              child: TextFormField(
-                key: widget.fieldKeyEmail,
-                onChanged: widget.onFieldSubmittedEmail,
-                decoration: const InputDecoration(
-                    isDense: false,
-                    hintText: 'Email...',
-                    suffixIcon: Icon(Icons.email),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(20)),
-                style: TextStyle(
-                  color: colors.onSurface,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            )),
-        Padding(
-            padding:
-                const EdgeInsets.only(top: 16, bottom: 32, left: 32, right: 32),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color.fromARGB(88, 206, 206, 206),
-              ),
-              child: TextFormField(
-                key: widget.fieldKeyPassword,
-                onChanged: widget.onFieldSubmittedPassword,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: _obscured,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: InputDecoration(
-                  isDense: false,
-                  hintText: '*********',
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(20),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                    child: GestureDetector(
-                      onTap: _toggleObscured,
-                      child: Icon(
-                        _obscured
-                            ? Icons.visibility_rounded
-                            : Icons.visibility_off_rounded,
-                        size: 24,
-                      ),
+    return Padding(
+        padding: const EdgeInsets.only(top: 48, bottom: 0, left: 32, right: 32),
+        child: Container(
+            alignment: Alignment.centerLeft,
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromARGB(207, 236, 236, 236),
+                    ),
+                    alignment: Alignment.centerLeft,
+                    width: MediaQuery.of(context).size.width * 0.40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Image.asset('assets/perfil.png'),
+                        ),
+                        const SizedBox(width: 10),
+                        const Text(
+                          'Leonardo',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 57, 57, 57),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                style: TextStyle(
-                  color: colors.onSurface,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            )),
-        Padding(
-            padding: const EdgeInsets.only(top: 0, bottom: 16, right: 32),
-            child: Container(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  'Esqueceu a senha?',
-                  style: TextStyle(
-                    color: colors.primary,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    decoration: TextDecoration.underline,
-                  ),
-                ))),
-      ],
-    );
+                  Container(
+                    height: 50,
+                    width: 50,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: const Color.fromARGB(207, 236, 236, 236),
+                    ),
+                    child: SvgPicture.asset('assets/svgs/notifications.svg'),
+                  )
+                ])));
   }
 }
 
@@ -235,92 +232,67 @@ class TitleSection extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
+    required this.titleHighlighted,
   });
 
   final String title;
   final String description;
+  final String titleHighlighted;
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colors = Theme.of(context).colorScheme;
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 32, bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          /*2*/
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 32),
-            ),
-          ),
-          Text(
-            description,
-            style: TextStyle(
-              color: colors.onSurface,
-              fontSize: 16,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ButtonLogin extends StatelessWidget {
-  const ButtonLogin({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    ColorScheme colors = Theme.of(context).colorScheme;
     return Padding(
         padding:
-            const EdgeInsets.only(bottom: 64, top: 64, left: 32, right: 32),
-        child: SizedBox(
-            width: double.infinity,
-            height: 60,
-            child: TextButton(
-              onPressed: () {
-                // Abrir Dialog
-                if (emailInputController.text.isEmpty ||
-                    passwordInputController.text.isEmpty) {
-                  showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Atenção'),
-                          content:
-                              const Text("E-mail e senha não podem ser vazios"),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Beleza'),
-                            ),
-                          ],
-                        );
-                      });
-                } else {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => const Banner1()));
-                }
-              },
-              style: TextButton.styleFrom(
-                foregroundColor: colors.onPrimary,
-                backgroundColor: colors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              child: const Text('Entrar'),
-            )));
+            const EdgeInsets.only(top: 32, bottom: 32, left: 32, right: 32),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      textAlign: TextAlign.start,
+                      text: TextSpan(
+                        text: title,
+                        style: TextStyle(
+                            color: colors.onSurfaceVariant,
+                            fontSize: 50,
+                            fontFamily: 'AbhayaLibre',
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    Stack(alignment: Alignment.centerLeft, children: [
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                            text: description,
+                            style: TextStyle(
+                                color: colors.onSurfaceVariant,
+                                fontSize: 34,
+                                fontFamily: 'AbhayaLibre',
+                                fontWeight: FontWeight.w500),
+                            children: [
+                              TextSpan(
+                                text: titleHighlighted,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 255, 145, 0),
+                                    fontSize: 34,
+                                    fontFamily: 'AbhayaLibre',
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ]),
+                      ),
+                      Positioned(
+                          top: 30,
+                          right: 10,
+                          child: Image.asset('assets/images/underline.png')),
+                    ]),
+                  ])),
+        ));
   }
 }
 

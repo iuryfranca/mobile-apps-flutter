@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.4.1
   provider: ^6.1.2
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +59,8 @@ flutter:
     - assets/
     - assets/logo/
     - assets/images/
+    - assets/svgs/
+
   fonts:
     - family: AbhayaLibre
       fonts:
