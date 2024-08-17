@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/details.dart';
 import 'package:travel_app/login.dart';
 import 'package:provider/provider.dart';
 

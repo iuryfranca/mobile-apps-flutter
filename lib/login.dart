@@ -48,10 +48,10 @@ class Login extends StatelessWidget {
                       Text(
                         'Não tem uma conta?  ',
                         style: TextStyle(
-                          color: colors.onSurface,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            color: colors.onSurface,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'GillSansMT'),
                       ),
                       Text(
                         'Inscreva-se',
@@ -78,10 +78,10 @@ class Login extends StatelessWidget {
                         child: Text(
                           'Ou conecte',
                           style: TextStyle(
-                            color: colors.onSurface,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                              color: colors.onSurface,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'GillSansMT'),
                         ),
                       ),
                       Container(
@@ -253,16 +253,19 @@ class TitleSection extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 32),
+              style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 32,
+                  fontFamily: 'GillSansMT'),
             ),
           ),
           Text(
             description,
             style: TextStyle(
-              color: colors.onSurface,
-              fontSize: 16,
-              fontWeight: FontWeight.w300,
-            ),
+                color: colors.onSurface,
+                fontSize: 16,
+                fontWeight: FontWeight.w300,
+                fontFamily: 'GillSansMT'),
           ),
         ],
       ),

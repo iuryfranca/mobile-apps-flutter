@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:travel_app/details.dart';
 import 'package:travel_app/main.dart';
 
 class Home extends StatelessWidget {
@@ -58,64 +59,76 @@ class Home extends StatelessWidget {
                                           fontWeight: FontWeight.w400,
                                         )),
                                   ])),
-                          Container(
-                              padding: const EdgeInsets.only(
-                                  top: 0, bottom: 16, left: 32, right: 32),
-                              alignment: Alignment.centerLeft,
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: const BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 241, 246, 248),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 6,
-                                            blurStyle: BlurStyle.normal,
-                                            color: Color.fromARGB(28, 0, 0, 0),
-                                            offset: Offset.zero,
-                                            spreadRadius: 0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                          'assets/images/card-viagem1.png'),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Container(
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: const BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 241, 246, 248),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 6,
-                                            blurStyle: BlurStyle.normal,
-                                            color: Color.fromARGB(28, 0, 0, 0),
-                                            offset: Offset.zero,
-                                            spreadRadius: 0,
-                                          ),
-                                        ],
-                                      ),
-                                      child: Image.asset(
-                                          'assets/images/card-viagem2.png'),
-                                    ),
-                                  ],
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const Details()));
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.only(
+                                    top: 0, bottom: 16, left: 32, right: 32),
+                                alignment: Alignment.centerLeft,
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                              )),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  padding: const EdgeInsets.all(8),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: const BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 241, 246, 248),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 6,
+                                              blurStyle: BlurStyle.normal,
+                                              color:
+                                                  Color.fromARGB(28, 0, 0, 0),
+                                              offset: Offset.zero,
+                                              spreadRadius: 0,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Image.asset(
+                                            'assets/images/card-viagem1.png'),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: const BoxDecoration(
+                                          color: Color.fromARGB(
+                                              255, 241, 246, 248),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 6,
+                                              blurStyle: BlurStyle.normal,
+                                              color:
+                                                  Color.fromARGB(28, 0, 0, 0),
+                                              offset: Offset.zero,
+                                              spreadRadius: 0,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Image.asset(
+                                            'assets/images/card-viagem2.png'),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
                         ]),
                   ),
                   Container(
