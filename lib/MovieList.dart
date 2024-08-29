@@ -10,77 +10,113 @@ import 'package:dio/dio.dart';
 import 'package:my_flutter_app/main.dart';
 import 'package:provider/provider.dart';
 
-class MovieList extends StatelessWidget {
-  /// Method to get movies from the backend
-  // Future<List<Movie>> getMovies() async {
-  //   const String url =
-  //       'https://api.themoviedb.org/3/movie/popular?api_key=2b714e82ab5108ff8b963154afd167ea&language=pt-BR';
-  //   var httpClient = HttpClient();
-  //   try {
-  //     // Make the call
-  //     var request = await httpClient.getUrl(Uri.parse(url));
-  //     var response = await request.close();
-  //     if (response.statusCode == HttpStatus.ok) {
-  //       var json = await response.transform(utf8.decoder).join();
-  //       return createMovieList(json);
-  //     } else {
-  //       print("Failed http call.");
-  //     }
-  //   } catch (exception) {
-  //     print(exception.toString());
-  //   }
-  //   return [];
-  // }
+const List<String> list = <String>['Populares', 'Mais Recentes', 'Mais Vistos'];
+
+var dropdownValue = list.first;
+
+var inputSearch = '';
+
+Timer? _debounce;
+
+class MovieList extends StatefulWidget {
+  const MovieList({Key? key}) : super(key: key);
+  @override
+  State<MovieList> createState() => _MovieListState();
+}
+
+class _MovieListState extends State<MovieList> {
+  bool isloading = false;
+  bool isError = false;
+
+  List<Movie> movies = [];
+
+  @override
+  void initState() {
+    super.initState();
+    isloading = true;
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      setState(() {
+        inputSearch = query!;
+        isloading = true;
+      });
+      getMoviesWithDio();
+    });
+  }
 
   Future<List<Movie>> getMoviesWithDio() async {
-    const String url =
-        'https://api.themoviedb.org/3/movie/popular?api_key=2b714e82ab5108ff8b963154afd167ea&language=pt-BR';
+    inputSearch = inputSearch.split(' ').join('+');
+
+    var querySearch = inputSearch.isEmpty ? '' : 'query=$inputSearch';
+
+    final String url = inputSearch.isEmpty
+        ? 'https://api.themoviedb.org/3/movie/popular?api_key=2b714e82ab5108ff8b963154afd167ea&language=pt-BR'
+        : 'https://api.themoviedb.org/3/search/movie?api_key=2b714e82ab5108ff8b963154afd167ea&language=pt-BR&$querySearch';
 
     final dio = Dio();
     try {
-      // Make the call
       var request = await dio.get(url);
       if (request.statusCode == HttpStatus.ok) {
-        return createMovieList(request.toString());
+        createMovieList(request.toString());
       } else {
+        setState(() {
+          isloading = false;
+          isError = true;
+        });
         print("Failed http call.");
       }
     } catch (exception) {
+      setState(() {
+        isloading = false;
+        isError = true;
+      });
       print(exception.toString());
     }
     return [];
   }
 
   /// Method to parse information from the retrieved data
-  List<Movie> createMovieList(String resultString) {
-    List results = getResultsList(resultString);
+  createMovieList(String resultString) {
+    var data = json.decode(resultString);
+    // Get the result list
+
+    List results = data["results"];
 
     List<Movie> list = [];
     for (int i = 0; i < results.length; i++) {
       list.add(createMovieObject(results[i]));
     }
-    return list;
+
+    movies = list;
+
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        isloading = false;
+      });
+    });
   }
 
   /// Method to create a movie object.
   Movie createMovieObject(objectItem) {
-    String title = objectItem["title"];
-    String posterPath = objectItem["poster_path"];
-    String backdropImage = objectItem["backdrop_path"];
-    String originalTitle = objectItem["original_title"];
-    double voteAverage = objectItem["vote_average"];
-    String overview = objectItem["overview"];
-    String releaseDate = objectItem["release_date"];
+    String title = objectItem["title"] ?? '';
+    String posterPath = objectItem["poster_path"] ?? '';
+    String backdropImage = objectItem["backdrop_path"] ?? '';
+    String originalTitle = objectItem["original_title"] ?? '';
+    double voteAverage = objectItem["vote_average"] ?? 0;
+    String overview = objectItem["overview"] ?? '';
+    String releaseDate = objectItem["release_date"] ?? '';
 
     return Movie(title, posterPath, backdropImage, originalTitle, voteAverage,
         overview, releaseDate);
-  }
-
-  List getResultsList(String resultString) {
-    // Decode the json response
-    var data = json.decode(resultString);
-    // Get the result list
-    return data["results"];
   }
 
   List<Widget> createMovieCardItem(List<Movie>? movies, BuildContext context) {
@@ -137,16 +173,10 @@ class MovieList extends StatelessWidget {
     return FutureBuilder(
         future: getMoviesWithDio(),
         builder: (BuildContext context, AsyncSnapshot<List<Movie>> snapshot) {
-          List<Movie>? movies = snapshot.data;
-          if (snapshot.hasData == false) {
-            // Shows progress indicator until the data is load.
-            return const MaterialApp(
-                home: Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ));
+          if (isError) {
+            return const Center(child: Text('Erro ao carregar os filmes'));
           }
+
           // Shows the real data with the data retrieved.
           return Scaffold(
             appBar: AppBar(
@@ -165,14 +195,15 @@ class MovieList extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   padding:
                       const EdgeInsets.only(left: 16, bottom: 10, right: 16),
-                  child: const TextField(
-                    decoration: InputDecoration(
+                  child: TextField(
+                    decoration: const InputDecoration(
                       isDense: true,
                       hintText: 'Procurar filme...',
                       filled: true,
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.search_rounded),
                     ),
+                    onChanged: _onSearchChanged,
                   ),
                 ),
               ),
@@ -183,77 +214,89 @@ class MovieList extends StatelessWidget {
                       <PopupMenuEntry<AppMenu>>[
                     const PopupMenuItem<AppMenu>(
                       value: AppMenu.about,
-                      child: Text('About us'),
-                    ),
-                    const PopupMenuItem<AppMenu>(
-                      value: AppMenu.privacy,
-                      child: Text('Privacy Policy'),
+                      child: Text('Sobre nós'),
                     ),
                     const PopupMenuItem<AppMenu>(
                       value: AppMenu.settings,
-                      child: Text('Settings'),
+                      child: Text('Configurações'),
                     ),
                   ],
                 )
               ],
             ),
-            body: GridView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              itemCount: movies?.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 12 / 22,
-              ),
-              itemBuilder: (context, index) {
-                final List listMovies = createMovieCardItem(movies, context);
+            // ignore: prefer_is_empty
+            body: isloading
+                ? const Center(child: CircularProgressIndicator())
+                : GridView.builder(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
+                    itemCount: movies?.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 12 / 22,
+                    ),
+                    itemBuilder: (context, index) {
+                      final List listMovies =
+                          createMovieCardItem(movies, context);
 
-                return Card(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  MovieDetail(movies![index])));
+                      return Card(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        MovieDetail(movies![index])));
+                          },
+                          child: listMovies[index],
+                        ),
+                      );
                     },
-                    child: listMovies[index],
                   ),
-                );
-              },
-            ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () async => _shoppingCartDialog(context),
+              onPressed: () async => _filterDialog(context),
               child: const Icon(Icons.sort_rounded),
             ),
           );
         });
   }
 
-  Future<void> _shoppingCartDialog(BuildContext context) {
+  Future<void> _filterDialog(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Filtros'),
-          icon: const Icon(Icons.sort_rounded),
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Divider(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                textDirection: TextDirection.ltr,
-                children: <Widget>[
-                  Text('1 x Lorem Ipsum'),
-                  Text('\$9.99'),
-                  Text('1 x Lorem Ipsum'),
-                  Text('\$9.99'),
-                  Text('1 x Lorem Ipsum'),
-                  Text('\$9.99'),
-                ],
-              ),
-            ],
+          title: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Filtros'),
+                Icon(Icons.sort_rounded),
+              ]),
+          content: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: const DropdownButtonExample(),
+                ),
+                const Row(
+                  children: [
+                    CheckboxExample(),
+                    Text("Apenas filmes com +7.0"),
+                  ],
+                ),
+                const Row(
+                  children: [
+                    CheckboxExample(),
+                    Text("Apenas filmes com +9.0"),
+                  ],
+                ),
+              ],
+            ),
           ),
           actions: <Widget>[
             TextButton(
@@ -320,6 +363,72 @@ class _ButtonChangeDarkMode extends State<ButtonChangeDarkMode> {
       },
       style: enabledFilledButtonStyle(false, Theme.of(context).colorScheme),
       icon: Icon(_isDarkMode ? Icons.dark_mode : Icons.light_mode),
+    );
+  }
+}
+
+class DropdownButtonExample extends StatefulWidget {
+  const DropdownButtonExample({super.key});
+
+  @override
+  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+}
+
+class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward, size: 20),
+      elevation: 26,
+      underline: Container(
+        height: 2,
+        color: Colors.green[700],
+      ),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class CheckboxExample extends StatefulWidget {
+  const CheckboxExample({super.key});
+
+  @override
+  State<CheckboxExample> createState() => _CheckboxExampleState();
+}
+
+class _CheckboxExampleState extends State<CheckboxExample> {
+  bool isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    Color? getColor() {
+      if (isChecked) {
+        return Colors.green[700];
+      }
+      return Colors.grey;
+    }
+
+    return Checkbox(
+      checkColor: Colors.white,
+      fillColor: WidgetStateProperty.all(getColor()),
+      value: isChecked,
+      onChanged: (bool? value) {
+        setState(() {
+          isChecked = value!;
+        });
+      },
     );
   }
 }
