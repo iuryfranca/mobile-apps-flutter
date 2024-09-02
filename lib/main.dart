@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/MovieList.dart';
+import 'package:my_flutter_app/views/MovieList.dart';
 import 'package:provider/provider.dart';
 
 enum AppMenu {
