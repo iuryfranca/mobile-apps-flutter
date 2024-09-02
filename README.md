@@ -16,4 +16,4 @@ Tecnologias Utilizadas
 	•	Dart: Linguagem de programação utilizada no desenvolvimento do aplicativo.
 	•	API de Filmes: O aplicativo se comunica com uma API de filmes para buscar dados em tempo real.
 
-[Assista ao vídeo de demonstração](exemplevideo.mp4)
+[Assista ao vídeo de demonstração](https://youtube.com/shorts/wgci-8yzN8o)
