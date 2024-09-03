@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:the_mobie_db/MovieList.dart';
 import 'package:provider/provider.dart';
+import 'package:the_mobie_db/views/MovieList.dart';
 
 enum AppMenu {
   about,
