@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/MovieList.dart';
+import 'package:the_mobie_db/MovieList.dart';
 import 'package:provider/provider.dart';
 
 enum AppMenu {
@@ -30,7 +30,7 @@ class MovieApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: Provider.of<ThemeProvider>(context).currentTheme,
-      home: MovieList(),
+      home: const MovieList(),
     );
   }
 }

@@ -1,4 +1,4 @@
-# my_flutter_app
+# the_mobie_db
 
 A new Flutter project.
 

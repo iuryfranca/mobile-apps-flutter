@@ -1,6 +1,7 @@
-// ignore: file_names
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/Movie.dart';
+import 'package:the_mobie_db/Movie.dart';
 
 // ignore: must_be_immutable
 class MovieDetail extends StatelessWidget {
@@ -118,7 +119,7 @@ class MovieDetail extends StatelessWidget {
               label: const Text('Avaliar filme'),
               icon: const Icon(Icons.rate_review_outlined),
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             const FloatingActionButtonFavorite(),
           ],
         ));
@@ -129,6 +130,7 @@ class FloatingActionButtonFavorite extends StatefulWidget {
   const FloatingActionButtonFavorite({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _FloatingActionButtonFavorite createState() =>
       _FloatingActionButtonFavorite();
 }

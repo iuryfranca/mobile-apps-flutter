@@ -1,13 +1,14 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:my_flutter_app/Movie.dart';
-import 'package:my_flutter_app/MovieDetail.dart';
+import 'package:the_mobie_db/Movie.dart';
+import 'package:the_mobie_db/MovieDetail.dart';
 import 'package:dio/dio.dart';
-import 'package:my_flutter_app/main.dart';
+import 'package:the_mobie_db/main.dart';
 import 'package:provider/provider.dart';
 
 const List<String> list = <String>['Populares', 'Mais Recentes', 'Mais Vistos'];
@@ -46,7 +47,7 @@ class _MovieListState extends State<MovieList> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       setState(() {
-        inputSearch = query!;
+        inputSearch = query;
         isloading = true;
       });
       getMoviesWithDio();
@@ -72,14 +73,12 @@ class _MovieListState extends State<MovieList> {
           isloading = false;
           isError = true;
         });
-        print("Failed http call.");
       }
     } catch (exception) {
       setState(() {
         isloading = false;
         isError = true;
       });
-      print(exception.toString());
     }
     return [];
   }
@@ -98,7 +97,7 @@ class _MovieListState extends State<MovieList> {
 
     movies = list;
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         isloading = false;
       });
@@ -230,7 +229,7 @@ class _MovieListState extends State<MovieList> {
                 : GridView.builder(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 16),
-                    itemCount: movies?.length,
+                    itemCount: movies.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -247,7 +246,7 @@ class _MovieListState extends State<MovieList> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        MovieDetail(movies![index])));
+                                        MovieDetail(movies[index])));
                           },
                           child: listMovies[index],
                         ),
@@ -322,6 +321,7 @@ class ButtonChangeDarkMode extends StatefulWidget {
   const ButtonChangeDarkMode({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ButtonChangeDarkMode createState() => _ButtonChangeDarkMode();
 }
 
@@ -354,7 +354,6 @@ class _ButtonChangeDarkMode extends State<ButtonChangeDarkMode> {
       onPressed: () {
         setState(() {
           _isDarkMode = !_isDarkMode;
-          print('Dark mode: $_isDarkMode');
 
           _isDarkMode // call the functions
               ? themeProvider.setDarkmode()

@@ -91,9 +91,9 @@ class ColorsList extends StatelessWidget {
           ),
           ColorPairItem(
             colorName1: 'background',
-            color1: colorScheme.background,
+            color1: colorScheme.surface,
             colorName2: 'onBackground',
-            color2: colorScheme.onBackground,
+            color2: colorScheme.onSurface,
           ),
           ColorPairItem(
             colorName1: 'surface',
@@ -103,7 +103,7 @@ class ColorsList extends StatelessWidget {
           ),
           ColorPairItem(
             colorName1: 'surfaceVariant',
-            color1: colorScheme.surfaceVariant,
+            color1: colorScheme.surfaceContainerHighest,
             colorName2: 'onSurfaceVariant',
             color2: colorScheme.onSurfaceVariant,
           ),
