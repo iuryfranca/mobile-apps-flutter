@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:provider/provider.dart';
+import 'package:the_mobie_db/views/MovieList.dart';
+>>>>>>> feat/The-Movie-Database
 
 void main() => runApp(const MyApp());
 
+<<<<<<< HEAD
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+=======
+void main() async {
+  runApp(
+    MultiProvider(
+      // create the provider
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        )
+      ],
+      child: const MovieApp(),
+    ),
+  );
+}
+
+class MovieApp extends StatelessWidget {
+  const MovieApp({super.key});
+>>>>>>> feat/The-Movie-Database
 
   @override
   Widget build(BuildContext context) {
     const String appTitle = 'The Last Of Us Part II - Remastered';
     return MaterialApp(
+<<<<<<< HEAD
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
@@ -34,10 +59,16 @@ class MyApp extends StatelessWidget {
                       'The Last of Us Part II é um jogo eletrônico de ação-aventura e sobrevivência desenvolvido pela Naughty Dog e publicado pela Sony Interactive Entertainment. É a sequência de The Last of Us, lançado em 2013 para PlayStation 3. O jogo foi lançado para PlayStation 4 em 19 de junho de 2020. A história se passa cinco anos após os eventos do primeiro jogo e segue Ellie e Abby, cujos destinos se entrelaçam em um ciclo de vingança e perdão. O jogador controla Ellie, uma jovem que embarca em uma jornada por Seattle, Washington, em busca de vingança contra um grupo misterioso. O jogo é jogado a partir de uma perspectiva de terceira pessoa e os jogadores podem usar armas de fogo, armas improvisadas e furtividade para se defender contra humanos e criaturas hostis. O jogo também possui elementos de sobrevivência, como coleta de recursos, artesanato e resolução de quebra-cabeças.'),
             ]),
           )),
+=======
+      debugShowCheckedModeBanner: false,
+      theme: Provider.of<ThemeProvider>(context).currentTheme,
+      home: const MovieList(),
+>>>>>>> feat/The-Movie-Database
     );
   }
 }
 
+<<<<<<< HEAD
 class TitleSection extends StatelessWidget {
   const TitleSection({
     super.key,
@@ -184,5 +215,30 @@ class ImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(image, fit: BoxFit.contain);
+=======
+class ThemeProvider extends ChangeNotifier {
+  ThemeData? currentTheme = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.light,
+    colorSchemeSeed: Colors.green[700],
+  );
+
+  setLightMode() {
+    currentTheme = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light, // LightMode
+      colorSchemeSeed: Colors.green[700],
+    );
+    notifyListeners();
+  }
+
+  setDarkmode() {
+    currentTheme = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark, // DarkMode
+      colorSchemeSeed: Colors.green[700],
+    );
+    notifyListeners();
+>>>>>>> feat/The-Movie-Database
   }
 }
